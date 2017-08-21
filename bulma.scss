@@ -59,9 +59,24 @@ table {
   label {
     @extend .label;
     font-weight: $weight-normal;
+    &.required {
+      &:after {
+
+      }
+    }
   }
   textarea {
     @extend .textarea;
+  }
+
+  // Make sure form field labels appear properly and we have some spacing
+  .form-type-textfield,
+  .form-type-checkboxes,
+  .form-type-textarea {
+    & > label {
+      font-weight: bold;
+    }
+    margin-bottom: 1em;
   }
 }
 
@@ -73,8 +88,8 @@ table {
 
   .form-type-checkbox {
     @extend .box;
-    padding: 0.5em;
-    margin-right: 4% !important;
+    padding: 10px;
+    margin-right: 3% !important;
 
     // Force equal width so we have proper columns
     width: 30%;
@@ -83,19 +98,40 @@ table {
     }
 
     // Force real names into separate line to avoid breaking into multiple rows
-    em {
+    span.user-realname, span.user-name {
       display: block;
+    }
+
+    span.user-name {
+      font-size: $size-6;
+    }
+
+    span.user-realname {
+      font-style: italic;
+      font-size: $size-7;
     }
 
     // Float avatars to right for better readability
-    span.field-content {
-      margin-top: -40px;
+    span.user-avatar {
       margin-left: 20px;
       display: block;
+      float: right;
+      @include mobile {
+        float: none;
+      }
     }
 
     input[type=checkbox] {
-      margin-top: 20px;
+      float: left;
+      margin-top: 10px;
+      margin-right: 1em;
+      margin-bottom: 20px;
+      display: block;
+      height: 30px;
+    }
+
+    span.user-names {
+      float: left;
     }
   }
 }
