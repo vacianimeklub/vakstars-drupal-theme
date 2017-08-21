@@ -364,3 +364,32 @@ function vakstars_pager($variables) {
     return '<h2 class="element-invisible">' . t('Pages') . '</h2>' . $pager_items;
   }
 }
+
+function vakstars_menu_tree__main_menu($variables){
+    return '<nav class="navbar">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="/">
+                      <img class="vak-logo" src="' .base_path() . path_to_theme() . '/img/vaci-anime-klub-logo-uj-aranyok-500-opt.png" alt="Váci Anime Klub"/>
+                    </a>
+                    <div class="navbar-burger burger button is-primary" data-target="navMenu">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="navbar-menu" id="navMenu"><div class="navbar-start">' .
+                    $variables['tree'] .
+                '</div></div>
+            </nav>';
+}
+
+function vakstars_menu_link__main_menu($variables) {
+    $element = $variables['element'];
+    $options = $element['#localized_options'];
+
+    if (isset($options['attributes']['class']) && in_array('active-trail', $options['attributes']['class'])) {
+        $options['attributes']['class'][] = 'is-active';
+    }
+    $options['attributes']['class'][] = 'navbar-item';
+    $output = l($element['#title'], $element['#href'], $options);
+
+    return $output . "\n";
+}

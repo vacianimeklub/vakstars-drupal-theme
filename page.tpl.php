@@ -12,27 +12,6 @@
 
 <div class="container">
   <header role="banner">
-    <div class="siteinfo content">
-      <?php if ($logo): ?>
-        <figure>
-        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-        </a>
-        </figure>
-      <?php endif; ?>
-
-      <?php if($site_name OR $site_slogan ): ?>
-      <hgroup>
-        <?php if($site_name): ?>
-          <h1><?php print $site_name; ?></h1>
-        <?php endif; ?>
-        <?php if ($site_slogan): ?>
-          <h2><?php print $site_slogan; ?></h2>
-        <?php endif; ?>
-      </hgroup>
-      <?php endif; ?>
-    </div>
-
     <?php if($page['header']): ?>
       <div class="header-region">
         <?php print render($page['header']); ?>

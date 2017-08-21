@@ -3,3 +3,4 @@ description = Temporary bulma.io-based subtheme
 core = 7.x
 base theme = mothership
 stylesheets[all][] = css/bulma.css
+scripts[] = js/vakstars.js

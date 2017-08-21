@@ -7,3 +7,19 @@
 table {
   @extend .table;
 }
+
+.navbar-brand .navbar-item {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar .navbar-menu .navbar-start .navbar-item {
+  font-size: 0.85rem;
+  color: $vak-blue;
+}
+
+.navbar-burger {
+  span, &.is-active span {
+    background-color: $vak-white;
+  }
+}
