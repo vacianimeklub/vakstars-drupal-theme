@@ -59,11 +59,6 @@ table {
   label {
     @extend .label;
     font-weight: $weight-normal;
-    &.required {
-      &:after {
-
-      }
-    }
   }
   textarea {
     @extend .textarea;
@@ -143,6 +138,7 @@ fieldset {
 input[type=submit] {
   @extend .button;
   @extend .is-primary;
+  margin-right: 1em;
 }
 
 @include mobile {
