@@ -1,7 +1,7 @@
 {
   "name": "vakstars",
   "version": "0.1.0",
-  "main": "bulma.sass",
+  "main": "bulma.scss",
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "bulma": "^0.5.1",
@@ -13,13 +13,13 @@
     "build": "npm run build-clean && npm run build-sass && npm run build-autoprefix",
     "build-autoprefix": "postcss --use autoprefixer --output css/bulma.css css/bulma.css",
     "build-clean": "rm -rf css",
-    "build-sass": "node-sass --output-style expanded --source-map true bulma.sass css/bulma.css",
+    "build-sass": "node-sass --output-style expanded --source-map true bulma.scss css/bulma.css",
     "deploy": "npm run build",
     "start": "npm run build-sass -- --watch"
   },
   "files": [
     "css",
     "sass",
-    "bulma.sass"
+    "bulma.scss"
   ]
 }
