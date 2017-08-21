@@ -10,16 +10,107 @@ table {
 
 .navbar-brand .navbar-item {
   padding-left: 0;
-  padding-right: 0;
+  .vak-logo {
+    position: relative;
+    top: -2px;
+  }
 }
 
 .navbar .navbar-menu .navbar-start .navbar-item {
-  font-size: 0.85rem;
   color: $vak-blue;
 }
 
 .navbar-burger {
   span, &.is-active span {
     background-color: $vak-white;
+  }
+}
+
+#sidebar-second {
+  h2.title {
+    font-size: $size-6;
+    line-height: 1.25em;
+    margin-bottom: 1em;
+  }
+  nav {
+    @extend .box;
+    ul {
+      padding-left: $box-padding;
+    }
+  }
+  nav, div.box.content {
+    font-size: $size-7;
+    line-height: 1.25em;
+  }
+}
+
+.node-form {
+  .form-type-checkbox,
+  .form-type-textfield,
+  .form-textarea-wrapper {
+    @extend .control;
+  }
+  input[type=checkbox] {
+    @extend .checkbox;
+  }
+  input[type=text] {
+    @extend .input;
+  }
+  label {
+    @extend .label;
+    font-weight: $weight-normal;
+  }
+  textarea {
+    @extend .textarea;
+  }
+}
+
+/* Some special handling for our person selector checkboxes, let's force them into multiple columns somehow... */
+#edit-field-recipient-und {
+  @extend .field;
+  @extend .is-grouped;
+  @extend .is-grouped-multiline;
+
+  .form-type-checkbox {
+    @extend .box;
+    padding: 0.5em;
+    margin-right: 4% !important;
+
+    // Force equal width so we have proper columns
+    width: 30%;
+    @include mobile {
+      width: 46%;
+    }
+
+    // Force real names into separate line to avoid breaking into multiple rows
+    em {
+      display: block;
+    }
+
+    // Float avatars to right for better readability
+    span.field-content {
+      margin-top: -40px;
+      margin-left: 20px;
+      display: block;
+    }
+
+    input[type=checkbox] {
+      margin-top: 20px;
+    }
+  }
+}
+
+fieldset {
+  border: none;
+}
+
+input[type=submit] {
+  @extend .button;
+  @extend .is-primary;
+}
+
+@include mobile {
+  body > .container {
+    padding: 1em;
   }
 }

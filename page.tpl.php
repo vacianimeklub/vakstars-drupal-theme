@@ -57,13 +57,13 @@
     </div><!-- /main-->
 
     <?php if ($page['sidebar_first']): ?>
-      <div class="sidebar-first">
+      <div id="sidebar-first" class="sidebar-first">
       <?php print render($page['sidebar_first']); ?>
       </div>
     <?php endif; ?>
 
     <?php if ($page['sidebar_second']): ?>
-      <div class="sidebar-second">
+      <div id="sidebar-second" class="sidebar-second">
         <?php print render($page['sidebar_second']); ?>
       </div>
     <?php endif; ?>
