@@ -366,19 +366,24 @@ function vakstars_pager($variables) {
 }
 
 function vakstars_menu_tree__main_menu($variables){
-    return '<nav class="navbar">
-                <div class="navbar-brand">
-                    <a class="navbar-item" href="/">
-                      <img class="vak-logo" src="' .base_path() . path_to_theme() . '/img/vaci-anime-klub-logo-uj-aranyok-500-opt.png" alt="Váci Anime Klub"/>
-                    </a>
-                    <div class="navbar-burger burger button is-primary" data-target="navMenu">
-                        <span></span><span></span><span></span>
+    if (isset($variables['#tree']['#weight'])) { // This is just a bet, probably works well for deciding whether it's a root menu or not
+        return '<nav class="navbar">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="/">
+                          <img class="vak-logo" src="' .base_path() . path_to_theme() . '/img/vaci-anime-klub-logo-uj-aranyok-500-opt.png" alt="Váci Anime Klub"/>
+                        </a>
+                        <div class="navbar-burger burger button is-primary" data-target="navMenu">
+                            <span></span><span></span><span></span>
+                        </div>
                     </div>
-                </div>
-                <div class="navbar-menu" id="navMenu"><div class="navbar-start">' .
-                    $variables['tree'] .
-                '</div></div>
-            </nav>';
+                    <div class="navbar-menu" id="navMenu"><div class="navbar-start">' .
+                        $variables['tree'] .
+                    '</div></div>
+                </nav>';
+    }
+    else {
+        return $variables['tree'];
+    }
 }
 
 function vakstars_menu_link__main_menu($variables) {
@@ -388,8 +393,21 @@ function vakstars_menu_link__main_menu($variables) {
     if (isset($options['attributes']['class']) && in_array('active-trail', $options['attributes']['class'])) {
         $options['attributes']['class'][] = 'is-active';
     }
-    $options['attributes']['class'][] = 'navbar-item';
-    $output = l($element['#title'], $element['#href'], $options);
+
+    $output = '';
+    if ($element['#below']) {
+        $options['attributes']['class'][] = 'navbar-link';
+        $sub_menu = drupal_render($element['#below']);
+        $output .=
+            '<div class="navbar-item has-dropdown is-hoverable">' .
+            l($element['#title'], $element['#href'], $options) .
+            '<div class="navbar-dropdown">' . $sub_menu . '</div>' .
+            '</div>';
+    }
+    else {
+        $options['attributes']['class'][] = 'navbar-item';
+        $output .= l($element['#title'], $element['#href'], $options);
+    }
 
     return $output . "\n";
 }
