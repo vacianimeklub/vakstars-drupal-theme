@@ -20,8 +20,10 @@ table {
   }
 }
 
-.navbar .navbar-menu .navbar-start .navbar-item {
-  color: $vak-blue;
+.navbar .navbar-menu .navbar-start {
+  .navbar-item, .navbar-link {
+    color: $vak-blue;
+  }
 }
 
 .navbar-burger {
