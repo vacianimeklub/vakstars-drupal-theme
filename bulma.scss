@@ -121,7 +121,8 @@ table {
   // Make sure form field labels appear properly and we have some spacing
   .form-type-textfield,
   .form-type-checkboxes,
-  .form-type-textarea {
+  .form-type-textarea,
+  .form-type-password {
     & > label {
       font-weight: bold;
     }
@@ -219,7 +220,7 @@ input[type=submit] {
   @extend .is-info;
 }
 
-@include mobile {
+@include touch {
   body > .container {
     padding: 1em;
   }
