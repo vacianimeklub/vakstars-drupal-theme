@@ -423,7 +423,7 @@ function vakstars_status_messages($variables) {
     );
     $type_to_class = array(
         'status' => 'is-success',
-        'error' => 'is-error',
+        'error' => 'is-danger',
         'warning' => 'is-warning',
     );
     foreach (drupal_get_messages($display) as $type => $messages) {
