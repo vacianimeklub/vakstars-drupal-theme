@@ -6,6 +6,8 @@
 
 table {
   @extend .table;
+  @extend .is-striped;
+  @extend .is-fullwidth;
 }
 
 .navbar {
