@@ -39,6 +39,14 @@ table {
   @extend .content;
 }
 
+.page {
+  .views-table {
+    @include touch {
+      font-size: 0.75em;
+    }
+  }
+}
+
 #comments {
   margin-top: 2em;
   .content-body {
