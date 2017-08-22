@@ -34,8 +34,31 @@ table {
   }
 }
 
-#main-content .panel-display .panel-panel {
+#main-content .panel-display .panel-panel,
+.node-vote {
   @extend .content;
+}
+
+#comments {
+  margin-top: 2em;
+  .content-body {
+    font-size: $size-5;
+  }
+  .comment-links ul.links.inline{
+    margin: 0;
+    li {
+      margin: 0;
+      padding: 0;
+      a {
+        display: block;
+        @extend .button;
+        @extend .is-small;
+        @extend .is-primary;
+        @extend .is-outlined;
+        margin-bottom: 0.25em;
+      }
+    }
+  }
 }
 
 // Typo in RSVP, I didn't care to fix (I would need to rename field for that)
@@ -105,8 +128,22 @@ table {
   }
 }
 
+.node-event, .node-vote {
+  .field {
+    & > label {
+      display: block;
+      font-weight: bold;
+      font-size: $size-5;
+    }
+  }
+}
+
 .form-type-radio {
   margin: 1em;
+}
+
+.form-actions {
+  margin-top: 1em;
 }
 
 /* Some special handling for our person selector checkboxes, let's force them into multiple columns somehow... */
