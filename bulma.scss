@@ -8,6 +8,10 @@ table {
   @extend .table;
 }
 
+.navbar {
+  margin-bottom: 2em;
+}
+
 .navbar-brand .navbar-item {
   padding-left: 0;
   .vak-logo {
@@ -26,6 +30,18 @@ table {
   }
 }
 
+#main-content .panel-display .panel-panel {
+  @extend .content;
+}
+
+// Typo in RSVP, I didn't care to fix (I would need to rename field for that)
+.flag-rvsp a.flag-link-confirm {
+  @extend .button;
+  @extend .is-large;
+  @extend .is-primary;
+  margin-bottom: 0.5em;
+}
+
 #sidebar-second {
   h2.title {
     font-size: $size-6;
@@ -41,6 +57,16 @@ table {
   nav, div.box.content {
     font-size: $size-7;
     line-height: 1.25em;
+  }
+
+  // Another disgusting hack for fixing avatar placement:
+  .box.content .item-list ol li {
+    line-height: 25px;
+
+    .field-content a img {
+      position: relative;
+      bottom: -10px;
+    }
   }
 }
 
