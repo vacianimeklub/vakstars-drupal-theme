@@ -97,16 +97,17 @@ table {
   }
 }
 
-.node-form {
+.node-form, #user-login-form {
   .form-type-checkbox,
   .form-type-textfield,
-  .form-textarea-wrapper {
+  .form-textarea-wrapper,
+  .form-type-password {
     @extend .control;
   }
   input[type=checkbox] {
     @extend .checkbox;
   }
-  input[type=text] {
+  input[type=text], input[type=password] {
     @extend .input;
   }
   label {
