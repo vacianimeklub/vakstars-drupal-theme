@@ -51,9 +51,12 @@
 <?php if ($needs_wrapping_element): ?>
   <div class="flag-outer flag-outer-<?php print $flag_name_css; ?>">
 <?php endif; ?>
+<?php
+    $button_size_class = $flag->name == "rvsp" ? "is-medium" : "";
+?>
 <span class="<?php print $flag_wrapper_classes; ?>">
   <?php if ($link_href): ?>
-    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?> button is-medium is-primary" rel="nofollow"><?php print $link_text; ?></a><span class="flag-throbber">&nbsp;</span>
+    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?> button <?php print $button_size_class ?> is-primary" rel="nofollow"><?php print $link_text; ?></a><span class="flag-throbber">&nbsp;</span>
   <?php else: ?>
     <span class="<?php print $flag_classes ?>"><?php print $link_text; ?></span>
   <?php endif; ?>
