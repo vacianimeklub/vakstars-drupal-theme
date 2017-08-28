@@ -17,12 +17,6 @@ html body.admin-menu {
   }
 }
 
-table {
-  @extend .table;
-  @extend .is-striped;
-  @extend .is-fullwidth;
-}
-
 .navbar {
   margin-bottom: 2em;
 }
