@@ -262,6 +262,8 @@ input[type=submit] {
 }
 
 .action-links {
+  margin-bottom: 1.5em;
+
   li a {
     @extend .button;
     @extend .is-outlined;

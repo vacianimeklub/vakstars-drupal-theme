@@ -31,12 +31,12 @@
         <?php print render($title_suffix); ?>
       </div>
 
-      <?php if ($action_links): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
+        <nav class="tabs is-small is-boxed"><?php print render($tabs); ?></nav>
       <?php endif; ?>
 
-      <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
-        <nav class="tabs"><?php print render($tabs); ?></nav>
+      <?php if ($action_links): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
       <?php endif; ?>
 
       <?php if($page['highlighted'] OR $messages){ ?>
