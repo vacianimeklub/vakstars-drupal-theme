@@ -259,3 +259,11 @@ input[type=submit] {
 .notification {
   margin-bottom: 2em;
 }
+
+.action-links {
+  li a {
+    @extend .button;
+    @extend .is-outlined;
+    @extend .is-info;
+  }
+}
