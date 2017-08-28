@@ -445,3 +445,8 @@ function vakstars_status_messages($variables) {
     }
     return $output;
 }
+
+function vakstars_form_comment_form_alter(&$form, &$form_state, $form_id) {
+    // This is most likely a Drupal bug
+    $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
+}
