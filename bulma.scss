@@ -105,7 +105,8 @@ table {
   }
 }
 
-.node-form, #user-login-form {
+.node-form,
+#user-register-form, #user-login, #user-login-form {
   .form-type-checkbox,
   .form-type-textfield,
   .form-textarea-wrapper,
@@ -135,6 +136,10 @@ table {
       font-weight: bold;
     }
     margin-bottom: 1em;
+  }
+
+  fieldset legend .fieldset-legend {
+    font-weight: bold;
   }
 }
 
