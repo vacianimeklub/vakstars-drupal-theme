@@ -66,7 +66,7 @@ table {
   .content-body {
     font-size: $size-5;
   }
-  .comment-links ul.links.inline{
+  .comment-links ul.links.inline {
     margin: 0;
     li {
       margin: 0;
@@ -85,9 +85,6 @@ table {
 
 // Typo in RSVP, I didn't care to fix (I would need to rename field for that)
 .flag-rvsp a.flag-link-confirm {
-  @extend .button;
-  @extend .is-medium;
-  @extend .is-primary;
   margin-bottom: 0.5em;
 }
 
@@ -119,27 +116,9 @@ table {
   }
 }
 
-.node-form,
-#user-register-form, #user-login, #user-login-form,
-#comment-form {
-  .form-type-checkbox,
-  .form-type-textfield,
-  .form-textarea-wrapper,
-  .form-type-password {
-    @extend .control;
-  }
-  input[type=checkbox] {
-    @extend .checkbox;
-  }
-  input[type=text], input[type=password] {
-    @extend .input;
-  }
+form {
   label {
-    @extend .label;
     font-weight: $weight-normal;
-  }
-  textarea {
-    @extend .textarea;
   }
 
   // Make sure form field labels appear properly and we have some spacing
@@ -156,6 +135,10 @@ table {
   fieldset legend .fieldset-legend {
     font-weight: bold;
   }
+}
+
+label p {
+  font-weight: $weight-normal;
 }
 
 .node-event, .node-vote {
@@ -183,7 +166,6 @@ table {
   @extend .is-grouped-multiline;
 
   .form-type-checkbox {
-    @extend .box;
     padding: 10px;
     margin-right: 3% !important;
 

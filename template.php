@@ -488,3 +488,328 @@ function vakstars_menu_local_task($variables) {
 
     return '<li' . (!empty($variables['element']['#active']) ? ' class="is-active"' : '') . '>' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
 }
+
+function vakstars_form_element($variables) {
+
+    $element = &$variables['element'];
+    // This is also used in the installer, pre-database setup.
+    $t = get_t();
+
+    // This function is invoked as theme wrapper, but the rendered form element
+    // may not necessarily have been processed by form_builder().
+    $element += array(
+        '#title_display' => 'before',
+    );
+
+    // Add element #id for #type 'item'.
+    if (isset($element['#markup']) && !empty($element['#id'])) {
+        $attributes['id'] = $element['#id'];
+    }
+    // Add element's #type and #name as class to aid with JS/CSS selectors.
+
+    $attributes['class'] = array();
+    $attributes['class'][] = 'control';
+    if(! theme_get_setting('mothership_classes_form_wrapper_formitem')){
+        $attributes['class'] = array('form-item');
+    }
+
+    //date selects need the form-item for the show/hide end date
+    if(isset($element['#type'])){
+        if ($element['#type'] == 'date_select' OR $element['#type'] == 'date_text' OR $element['#type'] == 'date_popup' ){ //AND
+            $attributes['class'] = array('form-item');
+        }
+    }
+
+    if (!empty($element['#type'])) {
+        if(!theme_get_setting('mothership_classes_form_wrapper_formtype')){
+            $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
+        }
+
+        switch ($element['#type']) {
+            case 'checkbox': $element['#attributes']['class'][] = 'checkbox'; break;
+            case 'textfield':
+            case 'password':
+                $element['#attributes']['class'][] = 'input';
+                break;
+            case 'textarea':
+                $element['#attributes']['class'][] = 'textarea';
+                break;
+        }
+        // Some extra stuff for the person selector
+        if ($element['#type'] == 'checkbox' && $element['#parents'][0] == 'field_recipient') {
+            $attributes['class'][] = 'box';
+        }
+    }
+    if (!empty($element['#name'])) {
+        if(!theme_get_setting('mothership_classes_form_wrapper_formname')){
+            $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
+        }
+    }
+    // Add a class for disabled elements to facilitate cross-browser styling.
+    if (!empty($element['#attributes']['disabled'])) {
+        $attributes['class'][] = 'form-disabled';
+    }
+
+    if(isset($element['#title']) && $element['#title'] != 'Language' && $element['#required']) {
+        $attributes['class'][] = 'form-required';
+    }
+
+
+    //freeform css class killing \m/
+    if($attributes['class']){
+        $remove_class_form = explode(", ", theme_get_setting('mothership_classes_form_freeform'));
+        $attributes['class'] = array_values(array_diff($attributes['class'],$remove_class_form));
+    }
+
+    if($attributes['class']){
+        $output =  '<div' . drupal_attributes($attributes) . '>' . "\n";
+    }else{
+        $output =  "\n" . '<div>' . "\n";
+    }
+
+
+    // If #title is not set, we don't display any label or required marker.
+    if (!isset($element['#title'])) {
+        $element['#title_display'] = 'none';
+    }
+    $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
+    $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
+
+    switch ($element['#title_display']) {
+        case 'before':
+        case 'invisible':
+            $output .= ' ' . theme('form_element_label', $variables);
+            $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+            break;
+
+        case 'after':
+            $output .= ' ' . $prefix . $element['#children'] . $suffix;
+            $output .= ' ' . theme('form_element_label', $variables) . "\n";
+            break;
+
+        case 'none':
+        case 'attribute':
+            // Output no label and no required marker, only the children.
+            $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+            break;
+    }
+
+    if (!empty($element['#description'])) {
+
+        /*
+        changes the description <div class="description"> to <small>
+        */
+        if(!theme_get_setting('mothership_classes_form_description')){
+            $output .= "\n" . '<div class="description">' . $element['#description'] . "</div>\n";
+        }else{
+            $output .= "\n" . '<small>' . $element['#description'] . "</small>\n";
+        }
+
+
+    }
+
+    $output .= "</div>\n";
+
+    return $output;
+}
+
+function vakstars_form_element_label($variables) {
+    $element = $variables['element'];
+
+    // This is also used in the installer, pre-database setup.
+    $t = get_t();
+
+    // If title and required marker are both empty, output no label.
+    if (empty($element['#title']) && empty($element['#required'])) {
+        return '';
+    }
+
+    $attributes = array();
+    $attributes['class'][] = 'label';
+
+    // If the element is required, a required marker is appended to the label.
+    // We dont cause we belive in the power of css and less crap in the markup so we add it in a class instead.
+    if(!theme_get_setting('mothership_form_required')){
+        $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+    }else{
+        if(!empty($element['#required'])){
+//       $attributes['class'] = 'form-field-required';
+            $attributes['class'][] = 'required';
+        }
+    }
+
+    $title = filter_xss_admin($element['#title']);
+
+    // Style the label as class option to display inline with the element.
+    if ($element['#title_display'] == 'after') {
+        if(!theme_get_setting('mothership_classes_form_label')){
+            $attributes['class'][] = 'option';
+        }
+    }
+    // Show label only to screen readers to avoid disruption in visual flows.
+    elseif ($element['#title_display'] == 'invisible') {
+        $attributes['class'][] = 'element-invisible';
+    }
+
+    //FOR attribute
+    // in html5 we need an element for the for id items & check TODO: clean this up
+    if (!empty($element['#id'])){
+        // not every element in drupal comes with an #id that we can use for the for="#id"
+        // AND
+        if(
+            //if its html5 & is not an item, checkboxradios or manged file
+            theme_get_setting('mothership_html5') AND
+            $element['#type'] != "item" &&
+            $element['#type'] != "checkboxes" &&
+            $element['#type'] != "radios" &&
+            $element['#type'] != "managed_file")
+        {
+            $attributes['for'] = $element['#id'];
+        }else{
+            $attributes['for'] = $element['#id'];
+        }
+    }
+
+    // The leading whitespace helps visually separate fields from inline labels.
+    if($attributes){
+        if(!theme_get_setting('mothership_form_required')){
+            return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+        }else{
+            return ' <label' . drupal_attributes($attributes) . '>' . $t('!title', array('!title' => $title )) . "</label>\n";
+        }
+    }else{
+        if(!theme_get_setting('mothership_form_required')){
+            return ' <label>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+        }else{
+            return ' <label>' . $t('!title', array('!title' => $title )) . "</label>\n";
+        }
+    }
+
+}
+
+function vakstars_textfield($variables) {
+    $element = $variables['element'];
+    $element['#size'] = '30';
+
+    //is this element requred then lest add the required element into the input
+    $required = !empty($element['#required']) ? ' required' : '';
+
+    //dont need to set type in html5 its default so lets remove it because we can
+    $element['#attributes']['type'] = 'text';
+
+    //placeholder
+    if (!empty($element['#title']) AND theme_get_setting('mothership_classes_form_placeholder_label') ) {
+        $element['#attributes']['placeholder'] =  $element['#title'];
+    }
+
+
+    element_set_attributes($element, array('id', 'name', 'value', 'size', 'maxlength'));
+
+    //remove the form-text class
+    if(!theme_get_setting('mothership_classes_form_input')){
+        _form_set_class($element, array('form-text'));
+    }
+    $extra = '';
+    if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
+        drupal_add_library('system', 'drupal.autocomplete');
+        $element['#attributes']['class'][] = 'form-autocomplete';
+
+        $attributes = array();
+        $attributes['type'] = 'hidden';
+        $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+        $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+        $attributes['disabled'] = 'disabled';
+        $attributes['class'][] = 'autocomplete';
+        $extra = '<input' . drupal_attributes($attributes) . $required .' />';
+    }
+
+    $element['#attributes']['class'][] = 'input';
+    $output = '<input' . drupal_attributes($element['#attributes']) . $required . ' />';
+
+    return $output . $extra;
+}
+
+function vakstars_textarea($variables) {
+    $element = $variables['element'];
+    element_set_attributes($element, array('id', 'name', 'cols', 'rows'));
+    if(!theme_get_setting('mothership_classes_form_input')){
+        _form_set_class($element, array('form-textarea'));
+    }
+
+    $wrapper_attributes = array(
+        'class' => array('form-textarea-wrapper'),
+    );
+
+
+
+    if (!empty($element['#title'])  AND theme_get_setting('mothership_classes_form_placeholder_label') ) {
+        $element['#attributes']['placeholder'] = $element['#title'];
+    }
+
+    // Add resizable behavior.
+    if (!empty($element['#resizable'])) {
+        drupal_add_library('system', 'drupal.textarea');
+        $wrapper_attributes['class'][] = 'resizable';
+    }
+
+    //is this element requred then lest add the required element into the input
+    $required = !empty($element['#required']) ? ' required' : '';
+
+    $element['#attributes']['class'][] = 'textarea';
+
+    $output = '<div' . drupal_attributes($wrapper_attributes) . '>';
+    $output .= '<textarea' . drupal_attributes($element['#attributes']) . $required .'>' . check_plain($element['#value']) . '</textarea>';
+    $output .= '</div>';
+    return $output;
+}
+
+function vakstars_checkbox($variables) {
+    $element = $variables['element'];
+    $t = get_t();
+    $element['#attributes']['type'] = 'checkbox';
+    element_set_attributes($element, array('id', 'name', '#return_value' => 'value'));
+
+    // Unchecked checkbox has #value of integer 0.
+    if (!empty($element['#checked'])) {
+        $element['#attributes']['checked'] = 'checked';
+    }
+    if(!theme_get_setting('mothership_classes_form_input')){
+        _form_set_class($element, array('form-checkbox'));
+    }
+    $element['#attributes']['class'][] = 'checkbox';
+
+    return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}
+
+function vakstars_password($variables) {
+    $element = $variables['element'];
+    $element['#size'] = '30';
+    $element['#attributes']['type'] = 'password';
+
+    element_set_attributes($element, array('id', 'name', 'size', 'maxlength'));
+//  element_set_attributes($element, array('id', 'name',  'maxlength'));
+    if(!theme_get_setting('mothership_classes_form_input')){
+        _form_set_class($element, array('form-text'));
+    }
+
+    //html5 plceholder love ? //substr(,0, 20);
+    if (!empty($element['#description']) AND theme_get_setting('mothership_classes_form_placeholder_description') ) {
+        $element['#attributes']['placeholder'] = $element['#description'];
+    }
+
+    if (!empty($element['#title']) AND theme_get_setting('mothership_classes_form_placeholder_label')) {
+        $element['#attributes']['placeholder'] = $element['#title'];
+    }
+
+
+    $element['#attributes']['class'][] = 'input';
+
+    if($variables['element']['#id'] == "edit-pass-pass1"){
+        return '<input' . drupal_attributes($element['#attributes']) . ' /><small>'. t('Enter a password').'</small>' ;
+    }elseif($variables['element']['#id'] == "edit-pass-pass2"){
+        return '<input' . drupal_attributes($element['#attributes']) . ' /><small>'. t('Repeat the password').'</small>' ;
+    }else{
+        return '<input' . drupal_attributes($element['#attributes']) . ' />' ;
+    }
+
+}
