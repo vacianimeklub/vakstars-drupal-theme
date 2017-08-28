@@ -29,6 +29,7 @@ table {
 
 .navbar-brand .navbar-item {
   padding-left: 0;
+  max-width: 80%;
   .vak-logo {
     position: relative;
     top: -2px;
@@ -85,7 +86,7 @@ table {
 // Typo in RSVP, I didn't care to fix (I would need to rename field for that)
 .flag-rvsp a.flag-link-confirm {
   @extend .button;
-  @extend .is-large;
+  @extend .is-medium;
   @extend .is-primary;
   margin-bottom: 0.5em;
 }
