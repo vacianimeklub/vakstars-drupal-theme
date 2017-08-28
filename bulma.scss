@@ -244,3 +244,7 @@ input[type=submit] {
     @extend .is-info;
   }
 }
+
+.content ul.links {
+  list-style: none;
+}
