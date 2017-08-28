@@ -625,7 +625,9 @@ function vakstars_form_element_label($variables) {
     }
 
     $attributes = array();
-    $attributes['class'][] = 'label';
+    if ($element['#type'] != 'radio') {
+        $attributes['class'][] = 'label';
+    }
 
     // If the element is required, a required marker is appended to the label.
     // We dont cause we belive in the power of css and less crap in the markup so we add it in a class instead.
