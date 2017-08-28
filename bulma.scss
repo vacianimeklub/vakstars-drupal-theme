@@ -42,11 +42,6 @@ html body.admin-menu {
   }
 }
 
-#main-content .panel-display .panel-panel,
-.node-vote {
-  @extend .content;
-}
-
 .page {
   .views-table {
     @include touch {

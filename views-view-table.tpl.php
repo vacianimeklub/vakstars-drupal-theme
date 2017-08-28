@@ -21,7 +21,7 @@
 ?>
 <?php
     if (!$classes) $classes = '';
-    $classes .= ' table is-striped is-fullwidth'
+    $classes .= ' table is-striped is-fullwidth';
 ?>
 <table <?php if ($classes) { print 'class="'. $classes . '" '; } ?><?php print $attributes; ?>>
    <?php if (!empty($title) || !empty($caption)) : ?>
