@@ -23,7 +23,9 @@ html body.admin-menu {
 
 .navbar-brand .navbar-item {
   padding-left: 0;
-  max-width: 80%;
+  @include touch() {
+    max-width: 80%;
+  }
   .vak-logo {
     position: relative;
     top: -2px;
