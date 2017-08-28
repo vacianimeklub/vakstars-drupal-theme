@@ -4,6 +4,19 @@
 // Import Bulma
 @import "node_modules/bulma/bulma";
 
+html body.admin-menu {
+  margin-top: 3em !important;
+  @include mobile {
+    margin-top: 0 !important;
+  }
+}
+
+#admin-menu {
+  @include mobile {
+    display: none;
+  }
+}
+
 table {
   @extend .table;
   @extend .is-striped;
